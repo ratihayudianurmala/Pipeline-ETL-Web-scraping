@@ -1,0 +1,158 @@
+# Menjalankan skrip
+(.venv) PS C:\ETL Pipelines> python main.py  
+==================================================
+TAHAP 1: EXTRACT
+==================================================
+Scraping halaman 1
+Scraping halaman 2
+Scraping halaman 3
+Scraping halaman 4
+Scraping halaman 5
+Scraping halaman 6
+Scraping halaman 7
+Scraping halaman 8
+Scraping halaman 9
+Scraping halaman 10
+Scraping halaman 11
+Scraping halaman 12
+Scraping halaman 13
+Scraping halaman 14
+Scraping halaman 15
+Scraping halaman 16
+Scraping halaman 17
+Scraping halaman 18
+Scraping halaman 19
+Scraping halaman 20
+Scraping halaman 21
+Scraping halaman 22
+Scraping halaman 23
+Scraping halaman 24
+Scraping halaman 25
+Scraping halaman 26
+Scraping halaman 27
+Scraping halaman 28
+Scraping halaman 29
+Scraping halaman 30
+Scraping halaman 31
+Scraping halaman 32
+Scraping halaman 33
+Scraping halaman 34
+Scraping halaman 35
+Scraping halaman 36
+Scraping halaman 37
+Scraping halaman 38
+Scraping halaman 39
+Scraping halaman 40
+Scraping halaman 41
+Scraping halaman 42
+Scraping halaman 43
+Scraping halaman 44
+Scraping halaman 45
+Scraping halaman 46
+Scraping halaman 47
+Scraping halaman 48
+Scraping halaman 49
+Scraping halaman 50
+Data mentah: 1000 rows
+
+==================================================
+TAHAP 2: TRANSFORM
+==================================================
+Data bersih: 867 rows
+
+==================================================
+TAHAP 3: LOAD
+==================================================
+Data berhasil disimpan ke products.csv
+Connected to Google Sheets
+Old data cleared
+Data berhasil diupload ke Fashion Data ETL!
+URL: https://docs.google.com/spreadsheets/d/13sZUDSx4KtHtzJSZCVmUNQNrfcTAcHSa2QTK6BNj_z8
+Google Sheets URL: https://docs.google.com/spreadsheets/d/13sZUDSx4KtHtzJSZCVmUNQNrfcTAcHSa2QTK6BNj_z8
+✓ Data berhasil disimpan ke PostgreSQL (table: fashion_products)
+
+==================================================
+ETL PIPELINE SELESAI!
+==================================================
+
+Preview data bersih:
+         Title      Price  ...  Gender                   Timestamp 
+1    T-shirt 2  1634400.0  ...   Women  2026-01-27 16:16:59.459840 
+2     Hoodie 3  7950080.0  ...  Unisex  2026-01-27 16:16:59.459840 
+3      Pants 4  7476960.0  ...     Men  2026-01-27 16:16:59.459840 
+4  Outerwear 5  5145440.0  ...   Women  2026-01-27 16:16:59.459840 
+5     Jacket 6  2453920.0  ...  Unisex  2026-01-27 16:16:59.459840 
+
+[5 rows x 7 columns]
+
+Info tipe data:
+Title         object
+Price        float64
+Rating       float64
+Colors         int64
+Size          object
+Gender        object
+Timestamp     object
+dtype: object
+
+# Menjalankan unit test pada folder tests
+(.venv) PS C:\ETL Pipelines> pytest Tests/ -v
+====================== test session starts =======================
+platform win32 -- Python 3.13.1, pytest-9.0.2, pluggy-1.6.0 -- C:\ETL Pipelines\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\ETL Pipelines
+plugins: cov-7.0.0
+collected 21 items                                                
+
+Tests/test_extract.py::test_ambil_konten_success PASSED     [  4%]
+Tests/test_extract.py::test_ambil_konten_invalid_url PASSED [  9%]
+Tests/test_extract.py::test_extract_fashion_data_complete PASSED [ 14%]
+Tests/test_extract.py::test_extract_fashion_data_missing_fields PASSED [ 19%]
+Tests/test_extract.py::test_extract_fashion_data_no_title PASSED [ 23%]
+Tests/test_extract.py::test_scrape_fashion_basic PASSED     [ 28%]
+Tests/test_extract.py::test_scrape_fashion_returns_dataframe_compatible PASSED [ 33%]
+Tests/test_extract.py::test_scrape_fashion_timestamp_exists PASSED [ 38%]
+Tests/test_load.py::test_save_to_csv_success PASSED         [ 42%] 
+Tests/test_load.py::test_save_to_csv_columns PASSED         [ 47%]
+Tests/test_load.py::test_save_to_csv_empty_dataframe PASSED [ 52%] 
+Tests/test_load.py::test_save_to_postgresql_success PASSED  [ 57%] 
+Tests/test_load.py::test_save_to_google_sheets_success PASSED [ 61%]
+Tests/test_transform.py::test_transform_removes_unknown_product PASSED [ 66%]
+Tests/test_transform.py::test_transform_removes_invalid_rating PASSED [ 71%]
+Tests/test_transform.py::test_transform_removes_not_rated PASSED [ 76%]
+Tests/test_transform.py::test_transform_converts_price_to_rupiah PASSED [ 80%]
+Tests/test_transform.py::test_transform_cleans_colors PASSED [ 85%]
+Tests/test_transform.py::test_transform_removes_duplicates PASSED [ 90%]
+Tests/test_transform.py::test_transform_removes_nulls PASSED [ 95%]
+Tests/test_transform.py::test_transform_correct_data_types PASSED [100%]
+
+======================= 21 passed in 2.31s ======================= 
+
+# Menjalankan test coverage pada folder tests
+(.venv) PS C:\ETL Pipelines> coverage run -m pytest Tests/
+>> coverage report -m
+>>
+====================== test session starts =======================
+platform win32 -- Python 3.13.1, pytest-9.0.2, pluggy-1.6.0        
+rootdir: C:\ETL Pipelines
+plugins: cov-7.0.0
+collected 21 items                                                
+
+Tests\test_extract.py ........                              [ 38%]
+Tests\test_load.py .....                                    [ 61%]
+Tests\test_transform.py ........                            [100%]
+
+======================= 21 passed in 2.76s ======================= 
+Name                      Stmts   Miss  Cover   Missing
+-------------------------------------------------------
+Tests\test_extract.py        73      0   100%
+Tests\test_load.py           48      0   100%
+Tests\test_transform.py      53      0   100%
+Utils\extract.py             71      9    87%   85, 88-90, 95-99, 102
+Utils\load.py                49      9    82%   13-15, 47-49, 95-97
+Utils\transform.py           16      3    81%   29-31
+-------------------------------------------------------
+TOTAL                       310     21    93%
+
+# Url Google Sheets:
+https://docs.google.com/spreadsheets/d/13sZUDSx4KtHtzJSZCVmUNQNrfcTAcHSa2QTK6BNj_z8

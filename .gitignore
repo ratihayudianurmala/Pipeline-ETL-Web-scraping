@@ -1,0 +1,10 @@
+# File Rahasia (JANGAN DIHAPUS DARI SINI)
+google-sheets-api.json
+.env
+
+# Folder Sampah/Sistem
+.venv/
+__pycache__/
+.pytest_cache/
+.coverage
+.vscode/
