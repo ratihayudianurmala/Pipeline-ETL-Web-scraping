@@ -2,11 +2,14 @@ from Utils.extract import scrape_fashion
 from Utils.transform import transform_data
 from Utils.load import save_to_csv, save_to_google_sheets, save_to_postgresql
 import pandas as pd
+import os
+from dotenv import load_dotenv
 
 
 def main():
     BASE_URL = "https://fashion-studio.dicoding.dev/"
-    
+    load_dotenv()
+
     # Extract
     print("="*50)
     print("TAHAP 1: EXTRACT")
@@ -45,10 +48,10 @@ def main():
     try:
         save_to_postgresql(
             df_clean,
-            host='localhost',
-            database='etl_db',
-            user='postgres',
-            password='plosotimur2',
+            host=os.getenv('DB_HOST', 'localhost'), 
+            database=os.getenv('DB_NAME'),
+            user=os.getenv('DB_USER'),
+            password=os.getenv('DB_PASSWORD'),
             table_name='fashion_products'
         )
     except Exception as e:
