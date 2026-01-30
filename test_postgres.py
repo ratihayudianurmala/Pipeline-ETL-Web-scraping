@@ -1,15 +1,16 @@
-import psycopg2
 import os
 from dotenv import load_dotenv
+import psycopg2
 
-try:
-    conn = psycopg2.connect(
-        host='localhost',
-        database='etl_db',
-        user='postgres',
-        password='plosotimur2' 
-    )
-    print("Koneksi ke PostgreSQL berhasil!")
-    conn.close()
-except Exception as e:
-    print(f"Gagal koneksi: {e}")
+load_dotenv()
+
+# 2. Panggil pakai os.getenv
+conn = psycopg2.connect(
+    host=os.getenv("DB_HOST"),
+    database=os.getenv("DB_NAME"),
+    user=os.getenv("DB_USER"),
+    password=os.getenv("DB_PASS"),
+    port=os.getenv("DB_PORT")
+)
+
+print("Berhasil konek ke Postgres dengan aman!")
